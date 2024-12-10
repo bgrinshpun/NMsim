@@ -6,26 +6,26 @@ $(document).ready(function() {
 
     // add button to source code chunks
     if ( $(this).hasClass('s') ) {
-      $('pre.r', this).prepend("<div class=\"showopt\">Show Source</div><br style=\"line-height:22px;\"/>");
-      $('pre.r', this).children('code').attr('class', 'folded');
+      $(this).prepend("<div class=\"showopt\">Show Source</div><br style=\"line-height:22px;\"/>");
+      $('pre.r', this).addClass('foldable');
+
     }
 
     // add button to output chunks
     if ( $(this).hasClass('o') ) {
-      $('pre:not(.r)', this).has('code').prepend("<div class=\"showopt\">Show Output</div><br style=\"line-height:22px;\"/>");
-      $('pre:not(.r)', this).children('code:not(r)').addClass('folded');
+      $(this).prepend("<div class=\"showopt\">Show Output</div><br style=\"line-height:22px;\"/>");
+      $('pre:not(.r)', this).addClass('foldable');
 
       // add button to plots
       $(this).find('img').wrap('<pre class=\"plot\"></pre>');
-      $('pre.plot', this).prepend("<div class=\"showopt\">Show Plot</div><br style=\"line-height:22px;\"/>");
-      $('pre.plot', this).children('img').addClass('folded');
+      $('pre.plot', this).children('img').addClass('foldable');
 
     }
   });
 
   // hide all chunks when document is loaded
-  $('.folded').css('display', 'none')
-
+  $('.foldable').css('display', 'none')
+	
   // function to toggle the visibility
   $('.showopt').click(function() {
     var label = $(this).html();
@@ -34,6 +34,6 @@ $(document).ready(function() {
     } else {
       $(this).html(label.replace("Hide", "Show"));
     }
-    $(this).siblings('code, img').slideToggle('fast', 'swing');
+    $(this).parent().find(".foldable").slideToggle('fast', 'swing');
   });
 });
